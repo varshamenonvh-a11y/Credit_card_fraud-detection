@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Transaction Input</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body class="bg-light">
+    <div class="container py-5">
+      <div class="card shadow-sm p-4">
+        <h2 class="mb-3 text-center">Enter Transaction Details</h2>
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label">Transaction ID</label>
+            <input name="TransactionID" class="form-control" placeholder="e.g. 10001" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Amount</label>
+            <input name="Amount" type="number" step="0.01" class="form-control" placeholder="e.g. 250.75" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Merchant ID</label>
+            <input name="MerchantID" class="form-control" placeholder="e.g. 501" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Transaction Type</label>
+            <select name="TransactionType" class="form-select">
+              {% for t in allowed_transaction_types %}
+                <option value="{{t}}">{{t}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Location</label>
+            <select name="Location" class="form-select">
+              {% for l in allowed_locations %}
+                <option value="{{l}}">{{l}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="text-center">
+            <button class="btn btn-success btn-lg" type="submit">Check Transaction</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Result</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-5">
+<div class="card shadow-sm p-4">
+<h2 class="mb-3">Prediction Result</h2>
+
+
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+{% else %}
+<ul class="list-group mb-3">
+<li class="list-group-item"><strong>TransactionID:</strong> {{TransactionID}}</li>
+<li class="list-group-item"><strong>Amount:</strong> {{Amount}}</li>
+<li class="list-group-item"><strong>MerchantID:</strong> {{MerchantID}}</li>
+<li class="list-group-item"><strong>TransactionType:</strong> {{TransactionType}}</li>
+<li class="list-group-item"><strong>Location:</strong> {{Location}}</li>
+</ul>
+
+
+<h4>Model prediction: <span class="badge bg-primary">{{ prediction }}</span></h4>
+<p><strong>Interpretation:</strong> {{ interpretation }}</p>
+<p><small>Legend: 0 = Fraud, 1 = Not Fraud</small></p>
+{% endif %}
+
+
+<a href="/input" class="btn btn-secondary mt-3">Back to Input</a>
+<a href="/" class="btn btn-link mt-3">Home</a>
+</div>
+</div>
+</body>
+</html>
