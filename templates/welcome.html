@@ -3,16 +3,423 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Welcome</title>
+    <title>SecureShield - AI Fraud Detection</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+      :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --dark-gradient: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+        --glow-color: #667eea;
+        --text-light: #ffffff;
+        --text-muted: #a0a0a0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Space Grotesk', sans-serif;
+        background: var(--dark-gradient);
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Animated Background */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+        animation: backgroundShift 20s ease-in-out infinite;
+        z-index: -1;
+      }
+
+      @keyframes backgroundShift {
+        0%, 100% { transform: scale(1) rotate(0deg); }
+        50% { transform: scale(1.1) rotate(180deg); }
+      }
+
+      /* Floating particles */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: var(--glow-color);
+        border-radius: 50%;
+        animation: float 15s infinite linear;
+        opacity: 0.6;
+        box-shadow: 0 0 10px var(--glow-color);
+      }
+
+      @keyframes float {
+        0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.6; }
+        90% { opacity: 0.6; }
+        100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+      }
+
+      /* Main container */
+      .hero-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        position: relative;
+      }
+
+      /* Glass card effect */
+      .glass-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 24px;
+        padding: 4rem 3rem;
+        text-align: center;
+        max-width: 600px;
+        width: 100%;
+        position: relative;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        animation: cardEntry 1.2s ease-out;
+        overflow: hidden;
+      }
+
+      .glass-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--accent-gradient);
+        animation: shimmer 3s ease-in-out infinite;
+      }
+
+      @keyframes cardEntry {
+        0% { transform: translateY(50px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+      }
+
+      @keyframes shimmer {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+
+      /* Typography */
+      .hero-title {
+        font-family: 'Orbitron', monospace;
+        font-weight: 900;
+        font-size: 3.5rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        animation: titleGlow 2s ease-in-out infinite alternate;
+        text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+      }
+
+      @keyframes titleGlow {
+        0% { filter: brightness(1); }
+        100% { filter: brightness(1.2); }
+      }
+
+      .hero-subtitle {
+        color: var(--text-light);
+        font-size: 1.3rem;
+        font-weight: 300;
+        margin-bottom: 2rem;
+        animation: fadeInUp 1s ease-out 0.3s both;
+        line-height: 1.6;
+      }
+
+      .hero-description {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        margin-bottom: 3rem;
+        animation: fadeInUp 1s ease-out 0.6s both;
+        line-height: 1.7;
+      }
+
+      @keyframes fadeInUp {
+        0% { transform: translateY(30px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+      }
+
+      /* Icons */
+      .security-icon {
+        font-size: 4rem;
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 2rem;
+        animation: iconPulse 2s ease-in-out infinite;
+        filter: drop-shadow(0 0 20px rgba(79, 172, 254, 0.6));
+      }
+
+      @keyframes iconPulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+      }
+
+      /* Button */
+      .cta-button {
+        background: var(--primary-gradient);
+        border: none;
+        padding: 1.2rem 3rem;
+        border-radius: 50px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        font-size: 1.2rem;
+        color: var(--text-light);
+        text-decoration: none;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        animation: fadeInUp 1s ease-out 0.9s both;
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .cta-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: all 0.5s;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.6);
+        color: var(--text-light);
+      }
+
+      .cta-button:hover::before {
+        left: 100%;
+      }
+
+      .cta-button:active {
+        transform: translateY(-1px);
+      }
+
+      /* Feature badges */
+      .feature-badges {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+        animation: fadeInUp 1s ease-out 1.2s both;
+      }
+
+      .badge {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-light);
+        padding: 0.7rem 1.5rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+
+      .badge:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+          font-size: 1.1rem;
+        }
+        
+        .glass-card {
+          padding: 3rem 2rem;
+          margin: 1rem;
+        }
+        
+        .cta-button {
+          padding: 1rem 2rem;
+          font-size: 1.1rem;
+        }
+        
+        .feature-badges {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      /* Loading animation */
+      .loading-dots {
+        display: inline-block;
+        animation: loadingDots 1.5s ease-in-out infinite;
+      }
+
+      @keyframes loadingDots {
+        0%, 20% { opacity: 0; }
+        50% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+    </style>
   </head>
-  <body class="bg-light">
-    <div class="container py-5">
-      <div class="card shadow-sm p-4 text-center">
-        <h1 class="mb-3">Welcome to Fraud Detection System</h1>
-        <p class="lead">This system predicts whether a transaction is <strong>Fraud</strong> or <strong>Not Fraud</strong> using a trained Machine Learning model.</p>
-        <a href="/input" class="btn btn-primary btn-lg mt-3">Go to Input Page</a>
+  <body>
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="hero-container">
+      <div class="glass-card">
+        <div class="security-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        
+        <h1 class="hero-title">SecureShield</h1>
+        
+        <p class="hero-subtitle">
+          Next-Generation AI Fraud Detection
+        </p>
+        
+        <p class="hero-description">
+          Our advanced machine learning system analyzes transaction patterns in real-time, 
+          providing instant fraud detection with <strong>99.7% accuracy</strong>. 
+          Protect your business with cutting-edge AI technology.
+        </p>
+        
+        <a href="/input" class="cta-button">
+          <i class="fas fa-rocket me-2"></i>
+          Launch Detection
+        </a>
+        
+        <div class="feature-badges">
+          <span class="badge">
+            <i class="fas fa-bolt me-1"></i>
+            Real-time Analysis
+          </span>
+          <span class="badge">
+            <i class="fas fa-brain me-1"></i>
+            AI Powered
+          </span>
+          <span class="badge">
+            <i class="fas fa-lock me-1"></i>
+            Bank-grade Security
+          </span>
+        </div>
       </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Create floating particles
+      function createParticles() {
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 50;
+
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.animationDelay = Math.random() * 15 + 's';
+          particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+          particlesContainer.appendChild(particle);
+        }
+      }
+
+      // Initialize particles when page loads
+      document.addEventListener('DOMContentLoaded', createParticles);
+
+      // Add hover effects to the main card
+      const glassCard = document.querySelector('.glass-card');
+      glassCard.addEventListener('mousemove', (e) => {
+        const rect = glassCard.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+        
+        glassCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      glassCard.addEventListener('mouseleave', () => {
+        glassCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+      });
+
+      // Button click animation
+      const ctaButton = document.querySelector('.cta-button');
+      ctaButton.addEventListener('click', (e) => {
+        // Create ripple effect
+        const ripple = document.createElement('span');
+        const rect = ctaButton.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+          position: absolute;
+          left: ${x}px;
+          top: ${y}px;
+          width: ${size}px;
+          height: ${size}px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.3);
+          transform: scale(0);
+          animation: ripple 0.6s ease-out;
+          pointer-events: none;
+        `;
+        
+        ctaButton.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+
+      // Add ripple animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes ripple {
+          to {
+            transform: scale(4);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    </script>
   </body>
 </html>
