@@ -8,9 +8,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, 
-#1f1c2c, 
-#928dab);
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
             color: #fff;
             display: flex;
             justify-content: center;
@@ -27,8 +25,7 @@
         h2 {
             text-align: center;
             margin-bottom: 20px;
-            color: 
-#f1c40f;
+            color: #f1c40f;
         }
         label {
             display: block;
@@ -45,8 +42,7 @@
         button {
             width: 100%;
             padding: 10px;
-            background: 
-#f39c12;
+            background: #f39c12;
             border: none;
             border-radius: 8px;
             color: white;
@@ -55,15 +51,15 @@
             transition: 0.3s;
         }
         button:hover {
-            background: 
-#e67e22;
+            background: #e67e22;
         }
     </style>
 </head>
 <body>
     <div class="form-container">
         <h2><i class="fas fa-credit-card"></i> Enter Transaction Details</h2>
-        <form action="{{ url_for('input_page') }}" method="POST">
+        <!-- ✅ Fix: form now posts directly to /predict -->
+        <form action="{{ url_for('predict') }}" method="POST">
             <label for="TransactionID">Transaction ID:</label>
             <input type="number" name="TransactionID" required>
 
@@ -87,7 +83,8 @@
                 {% endfor %}
             </select>
 
-            <button type="submit"><i class="fas fa-search"></i> Predict</button>
+            <!-- ✅ Changed button text -->
+            <button type="submit"><i class="fas fa-rocket"></i> Launch</button>
         </form>
     </div>
 </body>
