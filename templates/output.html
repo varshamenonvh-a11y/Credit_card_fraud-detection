@@ -1,93 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prediction Result</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #141e30, #243b55);
-            color: #fff;
+            background-color: #eef2f3;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
         }
-        .result-box {
-            background: rgba(0, 0, 0, 0.85);
-            padding: 25px;
-            border-radius: 15px;
-            width: 450px;
-            box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
             text-align: center;
+            width: 400px;
         }
-        h2 {
-            margin-bottom: 15px;
-            color: #f1c40f;
+        h1 {
+            color: #333;
         }
-        .error {
-            color: #e74c3c;
+        .result {
+            font-size: 22px;
             font-weight: bold;
-        }
-        .success {
-            color: #2ecc71;
-            font-weight: bold;
-        }
-        .fraud {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-        .notfraud {
-            color: #2ecc71;
-            font-weight: bold;
-        }
-        .details {
-            margin-top: 15px;
-            text-align: left;
-            background: rgba(255,255,255,0.05);
-            padding: 10px;
-            border-radius: 8px;
+            margin: 20px 0;
+            color: #007BFF;
         }
         a {
             display: inline-block;
             margin-top: 15px;
-            padding: 8px 15px;
-            background: #f39c12;
-            color: white;
             text-decoration: none;
-            border-radius: 8px;
-            transition: 0.3s;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
         }
         a:hover {
-            background: #e67e22;
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="result-box">
-        {% if error %}
-            <h2 class="error"><i class="fas fa-times-circle"></i> Error</h2>
-            <p class="error">{{ error }}</p>
-        {% else %}
-            <h2>Prediction Result</h2>
-            <p>
-                {% if prediction == 1 %}
-                    <span class="notfraud"><i class="fas fa-check-circle"></i> {{ interpretation }}</span>
-                {% else %}
-                    <span class="fraud"><i class="fas fa-exclamation-triangle"></i> {{ interpretation }}</span>
-                {% endif %}
-            </p>
-            <div class="details">
-                <p><b>Transaction ID:</b> {{ TransactionID }}</p>
-                <p><b>Amount:</b> {{ Amount }}</p>
-                <p><b>Merchant ID:</b> {{ MerchantID }}</p>
-                <p><b>Transaction Type:</b> {{ TransactionType }}</p>
-                <p><b>Location:</b> {{ Location }}</p>
-            </div>
-        {% endif %}
-        <a href="{{ url_for('input_page') }}"><i class="fas fa-arrow-left"></i> Try Another</a>
+    <div class="container">
+        <h1>Fraud Detection Result</h1>
+        <div class="result">
+            {% if prediction == 0 %}
+                🚨 Fraud Detected!
+            {% elif prediction == 1 %}
+                ✅ Not Fraud
+            {% else %}
+                ❓ Invalid Input
+            {% endif %}
+        </div>
+        <a href="/input">Try Another Prediction</a>
     </div>
 </body>
 </html>

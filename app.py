@@ -56,21 +56,21 @@ def predict():
     try:
         amount_val = float(amount)
     except ValueError:
-        return render_template("output.html", error="❌ Amount must be numeric.")
+        return render_template("output.html", prediction=None)
 
     # --- Encode categorical input ---
     enc_t = encoders["TransactionType"]
     enc_l = encoders["Location"]
 
     if str(ttype) not in list(enc_t.classes_):
-        return render_template("output.html", error=f"❌ TransactionType '{ttype}' not recognised.")
+        return render_template("output.html", prediction=None)
     if str(loc) not in list(enc_l.classes_):
-        return render_template("output.html", error=f"❌ Location '{loc}' not recognised.")
+        return render_template("output.html", prediction=None)
 
     ttype_enc = int(enc_t.transform([str(ttype)])[0])
     loc_enc = int(enc_l.transform([str(loc)])[0])
 
-    # --- Construct feature vector with consistency check ---
+    # --- Construct feature vector ---
     input_dict = {
         "TransactionID": float(tid) if tid != "" else 0.0,
         "Amount": amount_val,
@@ -79,33 +79,17 @@ def predict():
         "Location": loc_enc,
     }
 
-    # Check that all required features are present
-    missing = [col for col in feature_columns if col not in input_dict]
-    if missing:
-        return render_template("output.html", error=f"❌ Missing features: {missing}")
-
     # Order features correctly
     features = np.array([[input_dict[col] for col in feature_columns]])
 
     # --- Scale and predict ---
     try:
         features_scaled = scaler.transform(features)
-    except Exception as e:
-        return render_template("output.html", error=f"❌ Error scaling features: {e}")
+        pred = model.predict(features_scaled)[0]
+    except Exception:
+        return render_template("output.html", prediction=None)
 
-    pred = model.predict(features_scaled)[0]
-    interpretation = "Not Fraud" if pred == 1 else "Fraud"
-
-    return render_template(
-        "output.html",
-        prediction=int(pred),
-        interpretation=interpretation,
-        TransactionID=tid,
-        Amount=amount_val,
-        MerchantID=merchant,
-        TransactionType=ttype,
-        Location=loc,
-    )
+    return render_template("output.html", prediction=int(pred))
 
 
 if __name__ == "__main__":
