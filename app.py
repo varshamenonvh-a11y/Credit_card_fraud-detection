@@ -44,13 +44,22 @@ def input_page():
     )
 
 
-@app.route("/predict")
+@app.route("/predict", methods=["GET", "POST"])
 def predict():
-    tid = request.args.get("TransactionID", "")
-    amount = request.args.get("Amount", "")
-    merchant = request.args.get("MerchantID", "")
-    ttype = request.args.get("TransactionType", "")
-    loc = request.args.get("Location", "")
+    # Handle POST request from form
+    if request.method == "POST":
+        tid = request.form.get("TransactionID", "")
+        amount = request.form.get("Amount", "")
+        merchant = request.form.get("MerchantID", "")
+        ttype = request.form.get("TransactionType", "")
+        loc = request.form.get("Location", "")
+    else:
+        # Handle GET request with URL parameters
+        tid = request.args.get("TransactionID", "")
+        amount = request.args.get("Amount", "")
+        merchant = request.args.get("MerchantID", "")
+        ttype = request.args.get("TransactionType", "")
+        loc = request.args.get("Location", "")
 
     # --- Validate numeric input ---
     try:
